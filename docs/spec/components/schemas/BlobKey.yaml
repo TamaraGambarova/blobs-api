@@ -1,0 +1,13 @@
+type: object
+required:
+  - id
+  - type
+  - content
+properties:
+  id:
+    type: string
+    example: 1
+  type:
+    type: string
+    enum:
+      - blobs

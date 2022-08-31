@@ -1,0 +1,96 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: <%= serviceName %>
+  description: ''
+servers:
+  - url: 'https://api.demo.tokend.io'
+    description: TokenD Developer Environment
+paths:
+  /blobs:
+    post:
+      tags:
+        - Blob
+      summary: Blobs
+      description: Get blobs list
+      operationId: createBlob
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required: true
+                    $ref: '#/components/schemas/BlobsList'
+components:
+  schemas:
+    BlobKey:
+      type: object
+      required:
+        - id
+        - type
+        - content
+      properties:
+        id:
+          type: string
+          example: 1
+        type:
+          type: string
+          enum:
+            - blobs
+    BlobsList:
+      allOf:
+        - $ref: '#/components/schemas/BlobKey'
+        - type: object
+          required:
+            - attributes
+          properties:
+            attributes:
+              type: object
+              required:
+                - id
+                - owner
+                - content
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                owner:
+                  type: string
+                  description: blob owner
+                content:
+                  type: string
+                  description: custom json
+  parameters:
+    pageLimitParam:
+      in: query
+      name: 'page[limit]'
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 15
+        description: Numbers of items per page to return.
+    pageNumberParam:
+      in: query
+      name: 'page[number]'
+      required: false
+      schema:
+        type: integer
+      description: The number of a page to return.
+    sortingParam:
+      in: query
+      name: 'page[order]'
+      required: false
+      schema:
+        type: string
+        enum:
+          - asc
+          - desc
+        default: desc
+        description: 'Order of records on the page. If sortingParam is not specified, order of records is by default sorted by ID.'

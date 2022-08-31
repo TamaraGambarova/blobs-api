@@ -1,0 +1,15 @@
+log:
+  disable_sentry: true
+
+listener:
+  addr: :3434
+
+db:
+  url: "postgres://postgres:ApiDb@localhost:5435/ApiDb?sslmode=disable"
+
+cop:
+  disabled: true
+  endpoint: "http://blobs"
+  upstream: "http://blobs"
+  service_name: "blobs"
+  service_port: 80

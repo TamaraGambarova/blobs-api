@@ -1,0 +1,18 @@
+post:
+  tags:
+    - Blob
+  summary: Blobs
+  description: "Get blobs list"
+  operationId: createBlob
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                required: true
+                $ref: '#/components/schemas/BlobsList'

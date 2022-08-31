@@ -1,0 +1,22 @@
+allOf:
+  - $ref: '#/components/schemas/BlobKey'
+  - type: object
+    required: [ attributes ]
+    properties:
+      attributes:
+        type: object
+        required: [
+            id,
+            owner,
+            content,
+        ]
+        properties:
+          id:
+            type: integer
+            format: int64
+          owner:
+            type: string
+            description: blob owner
+          content:
+            type: string
+            description: custom json
