@@ -15,8 +15,17 @@ patch:
               type: object
               $ref: '#/components/schemas/Blobs'
   responses:
-    '204':
+    '200':
       description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                required: true
+                $ref: '#/components/schemas/Blobs'
     '400':
       description: invalid blob id
       content:

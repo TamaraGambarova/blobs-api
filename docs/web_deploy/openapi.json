@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "Blobs",
+    "title": "<%= serviceName %>",
     "description": ""
   },
   "servers": [
@@ -37,6 +37,26 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "wrong request format",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "failed to create blob",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
           }
         }
       },
@@ -61,6 +81,16 @@
                       "$ref": "#/components/schemas/Blobs"
                     }
                   }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "failed to get blobs list",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
                 }
               }
             }
@@ -92,11 +122,35 @@
           }
         },
         "responses": {
-          "204": {
-            "description": "Success"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "required": true,
+                      "$ref": "#/components/schemas/Blobs"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad input parameter",
+            "description": "invalid blob id",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "failed to update blob",
             "content": {
               "application/vnd.api+json": {
                 "schema": {
@@ -129,7 +183,7 @@
             }
           },
           "500": {
-            "description": "failed to get blob or failed to mark blob deleted",
+            "description": "failed to delete blob",
             "content": {
               "application/vnd.api+json": {
                 "schema": {

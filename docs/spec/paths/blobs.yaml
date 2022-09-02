@@ -22,12 +22,12 @@ post:
         application/vnd.api+json:
           schema:
             $ref: '#/components/schemas/Errors'
-      '500':
-        description: failed to create blob
-        content:
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/Errors'
+    '500':
+      description: failed to create blob
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Errors'
 get:
   tags:
     - Blob
