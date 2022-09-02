@@ -1,2 +1,2 @@
-# <%= serviceName %>
+Blobs Api
 
