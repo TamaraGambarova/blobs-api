@@ -23,18 +23,17 @@ func ListOfBlobs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ape.Render(w, resources.BlobsListListResponse{
-		Data: createBlobData(blobs),
+	ape.Render(w, resources.BlobsListResponse{
+		Data: createBlobsData(blobs),
 	})
 }
 
-func createBlobData(blobs []data.Blob) []resources.BlobsList {
-	result := make([]resources.BlobsList, 0, len(blobs))
+func createBlobsData(blobs []data.Blob) []resources.Blobs {
+	result := make([]resources.Blobs, 0, len(blobs))
 	for _, blob := range blobs {
-		result = append(result, resources.BlobsList{
+		result = append(result, resources.Blobs{
 			Key: resources.NewKeyInt64(blob.Id, resources.BLOBS),
-			Attributes: resources.BlobsListAttributes{
-				Id:      blob.Id,
+			Attributes: resources.BlobsAttributes{
 				Content: blob.Content,
 				Owner:   blob.Owner,
 			}})

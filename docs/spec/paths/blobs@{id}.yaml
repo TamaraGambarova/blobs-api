@@ -1,0 +1,53 @@
+patch:
+  tags:
+    - Blob
+  operationId: updateBlob
+  summary: "Update Blob"
+  description: |
+    Allows to update blob by id
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            data:
+              type: object
+              $ref: '#/components/schemas/Blobs'
+  responses:
+    '204':
+      description: Success
+    '400':
+      description: invalid blob id
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    '500':
+      description: failed to update blob
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+delete:
+  tags:
+    - Blob
+  operationId: deleteBlob
+  summary: "Delete Blob"
+  description:
+    Delete blob by id
+  responses:
+    '204':
+      description: Blob deleted
+    '400':
+      description: invalid blob id
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    '500':
+      description: failed to delete blob
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Errors'

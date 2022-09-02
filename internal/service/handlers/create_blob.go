@@ -7,6 +7,7 @@ import (
 	"gitlab.com/tokend/blobs/internal/service/requests"
 	"gitlab.com/tokend/blobs/resources"
 	"net/http"
+	"strconv"
 )
 
 func CreateBlob(w http.ResponseWriter, r *http.Request) {
@@ -25,17 +26,18 @@ func CreateBlob(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ape.Render(w, resources.BlobsListResponse{
+	ape.Render(w, resources.BlobsResponse{
 		Data: createBlobInfo(id, request),
 	})
 
 }
 
-func createBlobInfo(blobId string, request *resources.BlobsListResponse) resources.BlobsList {
-	return resources.BlobsList{
-		Key: resources.NewKey(blobId, resources.BLOBS),
-		Attributes: resources.BlobsListAttributes{
-			Id:      request.Data.Attributes.Id,
+func createBlobInfo(blobId string, request *resources.BlobsResponse) resources.Blobs {
+	convertedId, _ := strconv.ParseInt(blobId, 10, 64)
+
+	return resources.Blobs{
+		Key: resources.NewKeyInt64(convertedId, resources.BLOBS),
+		Attributes: resources.BlobsAttributes{
 			Owner:   request.Data.Attributes.Owner,
 			Content: request.Data.Attributes.Content,
 		},

@@ -64,7 +64,6 @@ func (r *base) URL() *url.URL {
 }
 
 func (r *base) populateFilters(target interface{}) error {
-	//_ = r.validateFilters(target)
 	filter := make(map[string]interface{})
 	for k, v := range r.filter {
 		filter[k] = v

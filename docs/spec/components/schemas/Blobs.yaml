@@ -6,14 +6,10 @@ allOf:
       attributes:
         type: object
         required: [
-            id,
             owner,
             content,
         ]
         properties:
-          id:
-            type: integer
-            format: int64
           owner:
             type: string
             description: blob owner

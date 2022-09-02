@@ -83,3 +83,8 @@ func (q *BlobQ) BlobsPage(params *data.PageParams) data.Blobs {
 	q.sql = params.ApplyTo(q.sql, "id")
 	return q
 }
+
+func (q *BlobQ) GetByID(id int64) data.Blobs {
+	q.sql = q.sql.Where(sq.Eq{"id": id})
+	return q
+}

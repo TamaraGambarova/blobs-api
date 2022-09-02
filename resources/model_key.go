@@ -11,13 +11,6 @@ type Key struct {
 	Type ResourceType `json:"type"`
 }
 
-func NewKey(id string, resourceType ResourceType) Key {
-	return Key{
-		ID:   id,
-		Type: resourceType,
-	}
-}
-
 func NewKeyInt64(id int64, resourceType ResourceType) Key {
 	return Key{
 		ID:   strconv.FormatInt(id, 10),

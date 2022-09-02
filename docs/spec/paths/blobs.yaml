@@ -2,7 +2,7 @@ post:
   tags:
     - Blob
   summary: Blobs
-  description: "Get blobs list"
+  description: "Create blob"
   operationId: createBlob
   responses:
     '200':
@@ -15,4 +15,40 @@ post:
               data:
                 type: object
                 required: true
-                $ref: '#/components/schemas/BlobsList'
+                $ref: '#/components/schemas/Blobs'
+    '400':
+      description: wrong request format
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+      '500':
+        description: failed to create blob
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Errors'
+get:
+  tags:
+    - Blob
+  summary: Blobs
+  description: "Get blobs list"
+  operationId: getBlobs
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                required: true
+                $ref: '#/components/schemas/Blobs'
+    '500':
+      description: failed to get blobs list
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Errors'

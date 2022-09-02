@@ -9,6 +9,7 @@ type Blobs interface {
 	Update(id int64, newValue *Blob) error
 	Delete(id int64) error
     BlobsPage(params *PageParams) Blobs
+	GetByID(id int64) Blobs
 }
 
 type Blob struct {

@@ -13,25 +13,26 @@ import (
 )
 
 func UpdateBlob(w http.ResponseWriter, r *http.Request) {
-	request, err := requests.CreateNewBlobRequest(r)
+	request, err := requests.UpdateBlobRequest(r)
 	if err != nil {
 		ape.RenderErr(w, problems.BadRequest(err)...)
 		return
 	}
 
-	id := chi.URLParam(r, "id")
-
-	a, convErr := strconv.ParseInt(id, 10, 64)
+	id, convErr := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 	if convErr != nil {
 		ape.RenderErr(w, problems.BadRequest(err)...)
 		return
 	}
-
+	blob, _ := BlobsQ(r).GetByID(id).Get()
+	if blob == nil {
+		ape.RenderErr(w, problems.NotFound())
+		return
+	}
 	err = BlobsQ(r).Transaction(func(q data.Blobs) error {
 		err = BlobsQ(r).Update(
-			a,
+			id,
 			&data.Blob{
-				Id:      request.Data.Attributes.Id,
 				Owner:   request.Data.Attributes.Owner,
 				Content: request.Data.Attributes.Content,
 			})
@@ -48,7 +49,7 @@ func UpdateBlob(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ape.Render(w, resources.BlobsListResponse{
-		Data: createBlobInfo(request.Data.ID, request),
+	ape.Render(w, resources.BlobsResponse{
+		Data: createBlobInfo(chi.URLParam(r, "id"), request),
 	})
 }

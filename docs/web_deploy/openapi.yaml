@@ -12,7 +12,7 @@ paths:
       tags:
         - Blob
       summary: Blobs
-      description: Get blobs list
+      description: Create blob
       operationId: createBlob
       responses:
         '200':
@@ -25,7 +25,72 @@ paths:
                   data:
                     type: object
                     required: true
-                    $ref: '#/components/schemas/BlobsList'
+                    $ref: '#/components/schemas/Blobs'
+    get:
+      tags:
+        - Blob
+      summary: Blobs
+      description: Get blobs list
+      operationId: getBlobs
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required: true
+                    $ref: '#/components/schemas/Blobs'
+  '/blobs/{id}':
+    patch:
+      tags:
+        - Blob
+      operationId: updateBlob
+      summary: Update Blob
+      description: |
+        Allows to update blob by id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  $ref: '#/components/schemas/Blobs'
+      responses:
+        '204':
+          description: Success
+        '400':
+          description: Bad input parameter
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    delete:
+      tags:
+        - Blob
+      operationId: deleteBlob
+      summary: Delete Blob
+      description: Delete blob by id
+      responses:
+        '204':
+          description: Blob deleted
+        '400':
+          description: invalid blob id
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: failed to get blob or failed to mark blob deleted
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Errors'
 components:
   schemas:
     BlobKey:
@@ -42,7 +107,7 @@ components:
           type: string
           enum:
             - blobs
-    BlobsList:
+    Blobs:
       allOf:
         - $ref: '#/components/schemas/BlobKey'
         - type: object
@@ -52,19 +117,49 @@ components:
             attributes:
               type: object
               required:
-                - id
                 - owner
                 - content
               properties:
-                id:
-                  type: integer
-                  format: int64
                 owner:
                   type: string
                   description: blob owner
                 content:
                   type: string
                   description: custom json
+    Errors:
+      description: 'Standard JSON:API error'
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          description: Non empty array of errors occurred during request processing
+          items:
+            type: object
+            required:
+              - title
+              - status
+            properties:
+              title:
+                type: string
+                description: 'Title is a short, human-readable summary of the problem'
+                example: Bad Request
+              detail:
+                type: string
+                description: Detail is a human-readable explanation specific to this occurrence of the problem
+                example: Request body was expected
+              status:
+                type: integer
+                description: Status is the HTTP status code applicable to this problem
+                example: 400
+                enum:
+                  - 400
+                  - 401
+                  - 403
+                  - 404
+                  - 409
+                  - 500
   parameters:
     pageLimitParam:
       in: query
