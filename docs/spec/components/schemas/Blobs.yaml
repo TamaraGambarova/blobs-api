@@ -6,13 +6,21 @@ allOf:
       attributes:
         type: object
         required: [
-            owner,
             content,
         ]
         properties:
-          owner:
-            type: string
-            description: blob owner
           content:
-            type: string
+            type: object
+            format: json.RawJSON
             description: custom json
+      relationships:
+        type: object
+        required:
+          - owner
+        properties:
+          owner:
+            type: object
+            description: blob owner
+            properties:
+              data:
+                $ref: '#/components/schemas/BlobOwnerKey'

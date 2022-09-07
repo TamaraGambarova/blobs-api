@@ -6,7 +6,8 @@ package resources
 
 type Blobs struct {
 	Key
-	Attributes BlobsAttributes `json:"attributes"`
+	Attributes    BlobsAttributes     `json:"attributes"`
+	Relationships *BlobsRelationships `json:"relationships,omitempty"`
 }
 type BlobsResponse struct {
 	Data     Blobs    `json:"data"`

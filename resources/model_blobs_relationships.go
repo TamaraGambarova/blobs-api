@@ -4,7 +4,6 @@
 
 package resources
 
-type BlobsAttributes struct {
-	// custom json
-	Content string `json:"content"`
+type BlobsRelationships struct {
+	Owner Relation `json:"owner"`
 }

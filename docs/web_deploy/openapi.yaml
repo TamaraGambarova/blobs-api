@@ -140,6 +140,19 @@ components:
           type: string
           enum:
             - blobs
+    BlobOwnerKey:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          description: owner address
+          example: GBSR6JG5AYSAW7HK6EGJFYVIVN54LVGSY3ZLJ6X3IBQZ766EJABCZQTH
+        type:
+          type: string
+          enum:
+            - owner
     Blobs:
       allOf:
         - $ref: '#/components/schemas/BlobKey'
@@ -150,15 +163,23 @@ components:
             attributes:
               type: object
               required:
-                - owner
                 - content
               properties:
-                owner:
-                  type: string
-                  description: blob owner
                 content:
-                  type: string
+                  type: object
+                  format: json.RawJSON
                   description: custom json
+            relationships:
+              type: object
+              required:
+                - owner
+              properties:
+                owner:
+                  type: object
+                  description: blob owner
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/BlobOwnerKey'
     Errors:
       description: 'Standard JSON:API error'
       type: object

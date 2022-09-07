@@ -17,7 +17,6 @@ func CreateBlob(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	id, err := BlobsQ(r).Create(&data.Blob{
-		Owner:   request.Data.Attributes.Owner,
 		Content: request.Data.Attributes.Content,
 	})
 	if err != nil {
@@ -38,8 +37,13 @@ func createBlobInfo(blobId string, request *resources.BlobsResponse) resources.B
 	return resources.Blobs{
 		Key: resources.NewKeyInt64(convertedId, resources.BLOBS),
 		Attributes: resources.BlobsAttributes{
-			Owner:   request.Data.Attributes.Owner,
 			Content: request.Data.Attributes.Content,
 		},
+		Relationships: &resources.BlobsRelationships{
+			Owner: resources.Relation{
+				Data: &resources.Key{
+					ID:   request.Data.Relationships.Owner.Data.ID,
+					Type: resources.OWNER},
+			}},
 	}
 }

@@ -43,8 +43,8 @@ module.exports = {
     common: {
       render: operations.defaultFileCopier([
         {
-          input: "gitignore",
-          output: ".gitignore"
+          input: ".gitignore",
+          output: "..gitignore"
         }
       ])
     },

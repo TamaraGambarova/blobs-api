@@ -20,7 +20,7 @@ func CreateNewBlobRequest(r *http.Request) (*resources.BlobsResponse, error) {
 
 func ValidateBlobRequest(r *resources.BlobsResponse) error {
 	return validation.Errors{
-		"/data/attributes/owner": validation.Validate(&r.Data.Attributes.Owner, validation.Required),
-		"/data/attributes/content": validation.Validate(&r.Data.Attributes.Content, validation.Required),
+		"/data/relationships/owner": validation.Validate(&r.Data.Relationships.Owner, validation.Required),
+		"/data/attributes/content":  validation.Validate(&r.Data.Attributes.Content, validation.Required),
 	}.Filter()
 }

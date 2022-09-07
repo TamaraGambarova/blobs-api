@@ -35,7 +35,14 @@ func createBlobsData(blobs []data.Blob) []resources.Blobs {
 			Key: resources.NewKeyInt64(blob.Id, resources.BLOBS),
 			Attributes: resources.BlobsAttributes{
 				Content: blob.Content,
-				Owner:   blob.Owner,
+			},
+			Relationships: &resources.BlobsRelationships{
+				Owner: resources.Relation{
+					Data: &resources.Key{
+						ID:   blob.Owner,
+						Type: resources.OWNER,
+					},
+				},
 			}})
 	}
 	return result

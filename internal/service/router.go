@@ -19,6 +19,7 @@ func (s *service) router() chi.Router {
 	)
 	r.Route("/integrations", func(r chi.Router) {
 		r.Get("/blobs", handlers.ListOfBlobs)
+		r.Get("/blobs/{id}", handlers.GetBlobById)
 		r.Post("/blobs", handlers.CreateBlob)
 		r.Patch("/blobs/{id}", handlers.UpdateBlob)
 		r.Delete("/blobs/{id}", handlers.DeleteBlob)

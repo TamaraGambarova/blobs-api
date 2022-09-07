@@ -21,7 +21,7 @@ func UpdateBlob(w http.ResponseWriter, r *http.Request) {
 
 	id, convErr := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 	if convErr != nil {
-		ape.RenderErr(w, problems.BadRequest(err)...)
+		ape.RenderErr(w, problems.BadRequest(convErr)...)
 		return
 	}
 	blob, _ := BlobsQ(r).GetByID(id).Get()
@@ -33,7 +33,6 @@ func UpdateBlob(w http.ResponseWriter, r *http.Request) {
 		err = BlobsQ(r).Update(
 			id,
 			&data.Blob{
-				Owner:   request.Data.Attributes.Owner,
 				Content: request.Data.Attributes.Content,
 			})
 
