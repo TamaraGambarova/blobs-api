@@ -161,6 +161,52 @@
           }
         }
       },
+      "get": {
+        "tags": [
+          "Blob"
+        ],
+        "operationId": "getBlobById",
+        "summary": "Get Blob By Id",
+        "description": "Get Blob By Id",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/Blobs"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid blob id",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "failed to get blob by id",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Blob"
@@ -202,8 +248,7 @@
         "type": "object",
         "required": [
           "id",
-          "type",
-          "content"
+          "type"
         ],
         "properties": {
           "id": {
@@ -257,7 +302,8 @@
                   "content": {
                     "type": "object",
                     "format": "json.RawJSON",
-                    "description": "custom json"
+                    "description": "custom json",
+                    "x-go-package": "encoding/json"
                   }
                 }
               },

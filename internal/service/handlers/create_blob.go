@@ -18,6 +18,7 @@ func CreateBlob(w http.ResponseWriter, r *http.Request) {
 	}
 	id, err := BlobsQ(r).Create(&data.Blob{
 		Content: request.Data.Attributes.Content,
+		Owner:   request.Data.Relationships.Owner.Data.ID,
 	})
 	if err != nil {
 		Log(r).WithError(err).Error("failed to create blob")

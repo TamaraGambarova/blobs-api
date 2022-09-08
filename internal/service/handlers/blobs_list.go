@@ -16,7 +16,9 @@ func ListOfBlobs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	blobs, err := BlobsQ(r).BlobsPage(request.PageParams).Select()
+	blobQ := BlobsQ(r)
+	applyFilters(blobQ, *request)
+	blobs, err := blobQ.BlobsPage(&request.OffsetPageParams).Select()
 	if err != nil {
 		Log(r).WithError(err).Error("failed to select blobs")
 		ape.RenderErr(w, problems.InternalError())
@@ -24,8 +26,15 @@ func ListOfBlobs(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ape.Render(w, resources.BlobsListResponse{
-		Data: createBlobsData(blobs),
+		Data:  createBlobsData(blobs),
+		Links: data.GetOffsetLinks(r, request.OffsetPageParams),
 	})
+}
+
+func applyFilters(q data.Blobs, request requests.ListRequest) {
+	if request.FilterOwner != nil && len(*request.FilterOwner) > 0 {
+		q.GetByOwner(*request.FilterOwner)
+	}
 }
 
 func createBlobsData(blobs []data.Blob) []resources.Blobs {

@@ -2,7 +2,6 @@ type: object
 required:
   - id
   - type
-  - content
 properties:
   id:
     type: string

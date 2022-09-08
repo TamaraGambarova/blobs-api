@@ -1,27 +1,22 @@
 package requests
 
 import (
-  "gitlab.com/tokend/blobs/internal/data"
-  "net/http"
-
+	"gitlab.com/distributed_lab/kit/pgdb"
+	"gitlab.com/distributed_lab/urlval"
+	"net/http"
 )
 
 type ListRequest struct {
-	*base
-	PageParams *data.PageParams
+	pgdb.OffsetPageParams
+	FilterOwner *string `filter:"owner"`
 }
 
 func NewListRequest(r *http.Request) (*ListRequest, error) {
-	b, err := newBase(r, baseOpts{})
+	request := ListRequest{}
+
+	err := urlval.Decode(r.URL.Query(), &request)
 	if err != nil {
-		return nil, err
-	}
-
-	params, err := data.GetPageParams(r)
-
-	request := ListRequest{
-		base:       b,
-		PageParams: params,
+		return &request, err
 	}
 
 	return &request, nil

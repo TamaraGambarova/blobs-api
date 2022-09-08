@@ -15,6 +15,7 @@ require (
 	gitlab.com/distributed_lab/figure v2.1.0+incompatible
 	gitlab.com/distributed_lab/kit v1.8.5
 	gitlab.com/distributed_lab/logan v3.8.0+incompatible
+	gitlab.com/distributed_lab/urlval v3.0.0+incompatible
 )
 
 require (

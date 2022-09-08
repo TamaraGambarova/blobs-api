@@ -79,12 +79,17 @@ func (q *BlobQ) Delete(id int64) error {
 	return q.db.Exec(stmt)
 }
 
-func (q *BlobQ) BlobsPage(params *data.PageParams) data.Blobs {
+func (q *BlobQ) BlobsPage(params *pgdb.OffsetPageParams) data.Blobs {
 	q.sql = params.ApplyTo(q.sql, "id")
 	return q
 }
 
 func (q *BlobQ) GetByID(id int64) data.Blobs {
 	q.sql = q.sql.Where(sq.Eq{"id": id})
+	return q
+}
+
+func (q *BlobQ) GetByOwner(owner string) data.Blobs {
+	q.sql = q.sql.Where(sq.Eq{"owner": owner})
 	return q
 }

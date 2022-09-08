@@ -472,6 +472,8 @@ gitlab.com/distributed_lab/lorem v0.2.1 h1:A1QoiEDRN3vlPrwsXJmPlENanQwu3FxpDl5vE
 gitlab.com/distributed_lab/lorem v0.2.1/go.mod h1:wkzrGoB1L/yUBu56SfoJ/vNiPqiHZcg75AnBkWNcjhQ=
 gitlab.com/distributed_lab/running v0.0.0-20200706131153-4af0e83eb96c h1:cpIjV8C//7sLVvMcBaFGopI8sMcCw8Za7T0HIf52esU=
 gitlab.com/distributed_lab/running v0.0.0-20200706131153-4af0e83eb96c/go.mod h1:4TnADX84dQjQMRHKIMPCVL0L97rD/Jxv0xDbrN6aKzk=
+gitlab.com/distributed_lab/urlval v3.0.0+incompatible h1:OWU3CcZU+z0BVooufOSQFO9biDfsjM3e7YYauC278HU=
+gitlab.com/distributed_lab/urlval v3.0.0+incompatible/go.mod h1:cKnUlnZCHUuke/l95YLvW5JoGC2yn53HVgF9rt1WiIg=
 go.etcd.io/bbolt v1.3.2/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=
 go.etcd.io/bbolt v1.3.3/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=
 go.etcd.io/etcd v0.0.0-20191023171146-3cf2f69b5738/go.mod h1:dnLIgRNXwCJa5e+c6mIZCrds/GIG4ncV9HhK5PX7jPg=
