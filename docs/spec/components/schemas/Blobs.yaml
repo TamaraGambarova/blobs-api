@@ -11,9 +11,8 @@ allOf:
         properties:
           content:
             type: object
-            format: json.RawJSON
+            format: json.RawMessage
             description: custom json
-            x-go-package: "encoding/json"
       relationships:
         type: object
         required:

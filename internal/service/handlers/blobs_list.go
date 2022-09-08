@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"gitlab.com/distributed_lab/ape"
 	"gitlab.com/distributed_lab/ape/problems"
 	"gitlab.com/tokend/blobs/internal/data"
@@ -40,19 +41,22 @@ func applyFilters(q data.Blobs, request requests.ListRequest) {
 func createBlobsData(blobs []data.Blob) []resources.Blobs {
 	result := make([]resources.Blobs, 0, len(blobs))
 	for _, blob := range blobs {
-		result = append(result, resources.Blobs{
-			Key: resources.NewKeyInt64(blob.Id, resources.BLOBS),
-			Attributes: resources.BlobsAttributes{
-				Content: blob.Content,
-			},
-			Relationships: &resources.BlobsRelationships{
-				Owner: resources.Relation{
-					Data: &resources.Key{
-						ID:   blob.Owner,
-						Type: resources.OWNER,
-					},
+		marshaledContent, err := json.Marshal(blob.Content)
+		if err == nil {
+			result = append(result, resources.Blobs{
+				Key: resources.NewKeyInt64(blob.Id, resources.BLOBS),
+				Attributes: resources.BlobsAttributes{
+					Content: marshaledContent,
 				},
-			}})
+				Relationships: &resources.BlobsRelationships{
+					Owner: resources.Relation{
+						Data: &resources.Key{
+							ID:   blob.Owner,
+							Type: resources.OWNER,
+						},
+					},
+				}})
+		}
 	}
 	return result
 }

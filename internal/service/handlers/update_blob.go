@@ -29,11 +29,16 @@ func UpdateBlob(w http.ResponseWriter, r *http.Request) {
 		ape.RenderErr(w, problems.NotFound())
 		return
 	}
+	unMarshaledContent, err := request.Data.Attributes.Content.MarshalJSON()
+	if err != nil {
+		ape.RenderErr(w, problems.BadRequest(err)...)
+		return
+	}
 	err = BlobsQ(r).Transaction(func(q data.Blobs) error {
 		err = BlobsQ(r).Update(
 			id,
 			&data.Blob{
-				Content: request.Data.Attributes.Content,
+				Content: string(unMarshaledContent),
 			})
 
 		if err != nil {

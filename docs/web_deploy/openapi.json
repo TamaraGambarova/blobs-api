@@ -302,8 +302,7 @@
                   "content": {
                     "type": "object",
                     "format": "json.RawJSON",
-                    "description": "custom json",
-                    "x-go-package": "encoding/json"
+                    "description": "custom json"
                   }
                 }
               },

@@ -197,7 +197,6 @@ components:
                   type: object
                   format: json.RawJSON
                   description: custom json
-                  x-go-package: encoding/json
             relationships:
               type: object
               required:

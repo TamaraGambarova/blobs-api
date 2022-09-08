@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"github.com/go-chi/chi"
 	"gitlab.com/distributed_lab/ape"
 	"gitlab.com/distributed_lab/ape/problems"
@@ -23,7 +24,12 @@ func GetBlobById(w http.ResponseWriter, r *http.Request) {
 		ape.RenderErr(w, problems.NotFound())
 		return
 	}
+	marshaledContent, err := json.Marshal(blobById.Content)
 
+	if err != nil {
+		ape.RenderErr(w, problems.InternalError())
+		return
+	}
 	ape.Render(w, resources.BlobsResponse{
 		Data: resources.Blobs{
 			Key: resources.Key{
@@ -31,7 +37,7 @@ func GetBlobById(w http.ResponseWriter, r *http.Request) {
 				Type: resources.BLOBS,
 			},
 			Attributes: resources.BlobsAttributes{
-				Content: blobById.Content,
+				Content: marshaledContent,
 			},
 			Relationships: &resources.BlobsRelationships{
 				Owner: resources.Relation{

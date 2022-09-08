@@ -16,8 +16,13 @@ func CreateBlob(w http.ResponseWriter, r *http.Request) {
 		ape.RenderErr(w, problems.BadRequest(err)...)
 		return
 	}
+	unMarshaledContent, err := request.Data.Attributes.Content.MarshalJSON()
+	if err != nil {
+		ape.RenderErr(w, problems.BadRequest(err)...)
+		return
+	}
 	id, err := BlobsQ(r).Create(&data.Blob{
-		Content: request.Data.Attributes.Content,
+		Content: string(unMarshaledContent),
 		Owner:   request.Data.Relationships.Owner.Data.ID,
 	})
 	if err != nil {
